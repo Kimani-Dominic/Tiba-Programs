@@ -81,7 +81,7 @@ python manage.py runserver
 - ReDoc: `http://127.0.0.1:8000/redoc/`
 
 ---
-<!-- 
+
 ## API Documentation
 
 The API endpoints are structured as follows:
@@ -94,71 +94,30 @@ Registers a new user.
 
 ```json
 {
-  "username": "newuser123",
-  "email": "user@email.com",
+  "username": "doctor123",
+  "email": "doctor123@mailinator.com",
   "password": "SecureP@ssw0rd!",
   "confirm_password": "SecureP@ssw0rd!",
-  "role": "patient"
+  "role": "doctor"
 }
 ```
 **Response:** User successfully created with status 201 
 
-#### `POST /api/login/`  
-Authenticates a user.  
-**Payload:** `username`, `password`  
+#### `POST /api/user-search/?username`
+Querying one specific user
 
-```json
-{
-  "username": "newuser123",
-  "password": "SecureP@ssw0rd!",
-}
-```
-**Response:** Auth token
 ---
 
-### 📅 Appointments
+### Programs
+create a new program
+**Payload:** `program name`, `a brieff description`
 
-#### `POST /api/appointments/`  
-Creates a new appointment.  
-**Payload:**  `date`, `time`.  
 ```json
 {
-  "appointment_time": "2025-04-15T10:30:00Z"
+  "name": "TB",
+  "description": "Tuberculosis program"
 }
-
 ```
-Only users with user role patients can create appointments
-**Auth required:** ✅ 
-
-
-#### `GET /api/appointments/`  
-Retrieves a list of appointments for the logged-in user and doctors who is scheduled for the appointment.  
-**Auth required:** ✅
-
-#### `PUT /api/appointments/<int:pk>/update/`  
-Updates the status of a specific appointment i.e approved, cancelled, completed.  
-**Auth required:** ✅
-
-
-### 📁 Medical Records
-
-#### `POST /api/records/create/`  
-Creates a new medical record entry for a patient.  
-**Payload:**  `diagnosis`, `treatment`, `notes`  
-```json
-{
-  "diagnosis": "Malaria",
-  "treatment": "Prescribed antibiotics and rest",
-  "notes": "Patient advised to follow up in one week"
-}
-
-```
-**Auth required:** ✅
-
-#### `GET /api/records/`  
-Lists all medical records associated with the logged-in user i.e patient.  
-**Auth required:** ✅
-
 
 ### 📄 API Docs UI
 
@@ -167,26 +126,42 @@ Lists all medical records associated with the logged-in user i.e patient.
 
 ---
 
-## Postman collections
+## Postman collections from the prototype
 Enable basic Auth and enter the basic Auth credentials since the Api endpoints are protected and will be throwing a `403 Unathorized` if not authenticated before making any API calls.
 
 ### Samples
-Register  User - `http://127.0.0.1:8000/api/register/`
+#### User Registration
+Register  User - `http://127.0.0.1:8000/api/doctor123/`
 
-- patient
-![A screenshot of registering patient details from postman](/images/image.png)
+![register payload](/images/image.png)
 
-curl post
-![Curl patient info post](/images/image2.png)
+![user registered successfully](/images/image-1.png)
 
+![querying a user](/images/image6.png)
 
-- doctor
+`http://127.0.0.1:8000/api/user-search/`
 
-![Doctor info update](/images/image3.png)
+Or insert specific user with their first/ username
+`http://127.0.0.1:8000/api/user-search/?query=username`
 
-- appointment
+#### Programs
 
-![appointment successful](images/image4.png)
+1. program creation
 
-- medicalrecords
-![Patient records](<images/image6.png>) -->
+![program creation](/images/image1.png)
+
+2. enrolling a patient to a program
+
+![appointment successful](images/image2.png)
+
+3. Get patient's enrolled to, programs
+
+![Patient records](<images/image4.png>)
+
+4. Appointments for patients
+
+![Appointments](/images/image7.png)
+
+5. Patient Records
+
+![recoords](/images/image8.png)
